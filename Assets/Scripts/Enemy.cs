@@ -145,18 +145,7 @@ public class Enemy : MonoBehaviour
         {
             _disableEnemyFiring = true;
 
-            //If beamlaser active, destroy it
-            if(transform.childCount > 0)
-            {
-                foreach(Transform child in transform.GetComponentsInChildren<Transform>())
-                {
-                    if(child.name == "LaserBeam(Clone)")
-                    {
-                        Destroy(transform.Find("LaserBeam(Clone)"));
-                    }
-                }
-                
-            }
+            DestroyLaserBeam();
 
             RamPlayer();
         }
@@ -337,11 +326,16 @@ public class Enemy : MonoBehaviour
 
     private void DestroyLaserBeam()
     {
-        if (_tempEnemyLaserBeamGO != null)
+        //If beamlaser active, destroy it
+        if (transform.childCount > 0)
         {
-            _tempEnemyLaserBeamGO.GetComponent<BoxCollider2D>().enabled = false;
-            _tempEnemyLaserBeamGO.GetComponent<SpriteRenderer>().enabled = false;
-            Destroy(_tempEnemyLaserBeamGO);
+            foreach (Transform child in transform.GetComponentsInChildren<Transform>())
+            {
+                if (child.name == "LaserBeam(Clone)")
+                {
+                    Destroy(transform.Find("LaserBeam(Clone)").gameObject);
+                }
+            }
         }
     }
 
